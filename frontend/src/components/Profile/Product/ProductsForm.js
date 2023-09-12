@@ -61,7 +61,7 @@ const ProductsForm = ({
     try {
       dispatch(setLoader(true));
       setError(null);
-      const response = await fetch("/products/add", {
+      const response = await fetch("/api/products/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const ProductsForm = ({
   const EditProduct = async (values) => {
     try {
       dispatch(setLoader(true));
-      const response = await fetch(`/products/${productId}`, {
+      const response = await fetch(`/api/products/${productId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
