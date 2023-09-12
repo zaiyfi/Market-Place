@@ -10,6 +10,14 @@ const productRoutes = require("./routes/productRoutes");
 // express app
 const app = express();
 
+app.use(
+  cors({
+    origin: ["https://market-place-th6b-hjibgniu8-zaiyfi.vercel.app/"],
+    methods: ["POST", "GET", "DELETE", "PATCH"],
+    credentials: true,
+  })
+);
+
 // middleware
 app.use(express.json());
 app.use((req, res, next) => {
