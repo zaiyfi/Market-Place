@@ -12,7 +12,7 @@ const useEditProduct = () => {
     try {
       dispatch(setLoader(true));
       setError(null);
-      const response = await fetch("/products/:_id", {
+      const response = await fetch("/api/products/:_id", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -22,7 +22,7 @@ const ProductDetails = () => {
     const fetchProduct = async () => {
       dispatch(setLoader(true));
 
-      const response = await fetch(`/products`, {
+      const response = await fetch(`/api/products`, {
         method: "GET",
       });
       if (!response.ok) {

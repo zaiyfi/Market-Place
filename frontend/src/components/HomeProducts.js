@@ -26,7 +26,7 @@ const HomeProducts = () => {
     const fetchProducts = async () => {
       dispatch(setLoader(true));
 
-      const response = await fetch("/products", {
+      const response = await fetch("/api/products", {
         method: "GET",
       });
       const json = await response.json();

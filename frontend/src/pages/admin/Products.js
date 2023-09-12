@@ -40,7 +40,7 @@ const Products = () => {
       dispatch(setLoader(true));
 
       try {
-        const response = await fetch("/products", {
+        const response = await fetch("/api/products", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -68,7 +68,7 @@ const Products = () => {
     try {
       dispatch(setLoader(true));
       console.log(status);
-      const response = await fetch(`/products/${productId}`, {
+      const response = await fetch(`/api/products/${productId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

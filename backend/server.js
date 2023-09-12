@@ -18,8 +18,8 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use("/auth", authRoutes);
-app.use("/products", productRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
 
 // listening to requests
 const PORT = process.env.PORT;

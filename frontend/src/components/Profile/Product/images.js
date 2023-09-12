@@ -6,13 +6,14 @@ import store from "../../../redux/store";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
 
-const Images = ({ editForm, setShowProductForm, productId }) => {
+const Images = ({ productId }) => {
   const { auth } = useSelector((state) => state.auth);
   const { products } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+
   // Calling Image Upload PATCH Api
   const imageUpload = async () => {
     dispatch(setLoader(true));
@@ -20,7 +21,7 @@ const Images = ({ editForm, setShowProductForm, productId }) => {
 
     formData.append("file", file);
 
-    const response = await fetch(`/products/upload/${productId}`, {
+    const response = await fetch(`/api/products/upload/${productId}`, {
       method: "PATCH",
       body: formData,
       headers: {

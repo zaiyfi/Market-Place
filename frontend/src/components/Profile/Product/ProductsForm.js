@@ -47,6 +47,7 @@ const ProductsForm = ({
       name: "boxAvailable",
     },
   ];
+
   // Creating rules for antd form
   const rules = [
     {

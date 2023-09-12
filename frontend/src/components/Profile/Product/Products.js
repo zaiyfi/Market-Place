@@ -42,7 +42,7 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         dispatch(setLoader(true));
-        const response = await fetch("/products/user-products", {
+        const response = await fetch("/api/products/user-products", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${auth.token}`,

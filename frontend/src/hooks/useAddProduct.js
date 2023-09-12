@@ -12,7 +12,7 @@ const useAddProduct = () => {
     try {
       dispatch(setLoader(true));
       setError(null);
-      const response = await fetch("/products/add", {
+      const response = await fetch("/api/products/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

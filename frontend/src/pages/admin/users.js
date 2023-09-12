@@ -26,7 +26,7 @@ const Users = () => {
   // Updateing user Status
   const handleUpdate = async () => {
     dispatch(setLoader(true));
-    const response = await fetch(`/auth/update/${userId}`, {
+    const response = await fetch(`/api/auth/update/${userId}`, {
       method: "PATCH",
       body: JSON.stringify({ status }),
       headers: {
@@ -49,7 +49,7 @@ const Users = () => {
   useEffect(() => {
     dispatch(setLoader(true));
     const fetchUsers = async () => {
-      const response = await fetch("/auth/users", {
+      const response = await fetch("/api/auth/users", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${auth.token}`,

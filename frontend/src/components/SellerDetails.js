@@ -8,7 +8,7 @@ function SellerDetails({ seller }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await fetch(`/auth/user/${seller}`, {
+      const response = await fetch(`/api/auth/user/${seller}`, {
         method: "GET",
       });
       const json = await response.json();
