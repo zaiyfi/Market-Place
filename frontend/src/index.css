@@ -53,6 +53,31 @@ a:hover {
 }
 .nav-t-r {
   display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border: 2px solid var(--primary);
+  border-radius: 30px;
+}
+.nav-t-r:hover {
+  background-color: var(--primary);
+  color: white;
+}
+.dropdown {
+  position: absolute;
+  top: 76px;
+  right: 25px;
+  width: 120px;
+  border-radius: 10px;
+  background-color: white;
+  padding: 7px;
+}
+.dropdown button {
+  width: 100%;
+}
+.dropdown a {
+  padding: 2px;
+  margin: 0;
 }
 .logo {
   color: var(--primary);

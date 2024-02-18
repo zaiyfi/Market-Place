@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 const Products = () => {
   const [productId, setProductId] = useState(false);
   const [status, setStatus] = useState(null);
+  const [boolean, setBoolean] = useState(false);
 
   const navigate = useNavigate();
 
@@ -61,13 +62,12 @@ const Products = () => {
       dispatch(setLoader(false));
     };
     fetchProducts();
-  }, [dispatch, auth]);
+  }, [dispatch, auth, boolean]);
 
   // Updating the status of the product through PATCH API
   const updateStatus = async () => {
     try {
       dispatch(setLoader(true));
-      console.log(status);
       const response = await fetch(`/api/products/${productId}`, {
         method: "PATCH",
         headers: {
@@ -80,11 +80,12 @@ const Products = () => {
       if (!response.ok) {
         throw new Error("Failed to add product");
       }
+      setBoolean(!boolean);
       console.log(store.getState());
       dispatch(setLoader(false));
-      window.location.reload();
       setProductId(null);
     } catch (error) {
+      console.error("Error updating product status:", error);
       dispatch(setLoader(false));
       setProductId(null);
     }
@@ -156,21 +157,10 @@ const Products = () => {
                           })}
                         </td>
                         <td className="whitespace-nowrap flex gap-1 px-6 py-12 justify-center ">
-                          <button
-                            value={
-                              product.status === "Approved" ? "Block" : "Reject"
-                            }
-                            onClick={(e) => {
-                              setStatus(e.target.value);
-                              setProductId(product._id);
-                            }}
-                          >
-                            {product.status === "Approved" ? "Block" : "Reject"}
-                          </button>
-                          {!product.status === "Approve" && (
+                          {product.status === "Blocked" && (
                             <button
                               value="Approved"
-                              onClick={async (e) => {
+                              onClick={(e) => {
                                 setStatus(e.target.value);
                                 setProductId(product._id);
                               }}
@@ -178,8 +168,46 @@ const Products = () => {
                               Approve
                             </button>
                           )}
+                          {product.status === "Pending" && (
+                            <div>
+                              <button
+                                value="Approved"
+                                onClick={(e) => {
+                                  setStatus(e.target.value);
+                                  setProductId(product._id);
+                                }}
+                              >
+                                Approve
+                              </button>
+                              <button
+                                className=" ms-2"
+                                value="Rejected"
+                                onClick={(e) => {
+                                  setStatus(e.target.value);
+                                  setProductId(product._id);
+                                }}
+                              >
+                                Reject
+                              </button>
+                            </div>
+                          )}
+
+                          {product.status === "Approved" && (
+                            <button
+                              value="Blocked"
+                              onClick={async (e) => {
+                                setStatus(e.target.value);
+                                setProductId(product._id);
+                              }}
+                            >
+                              Block
+                            </button>
+                          )}
                           {product._id === productId && (
-                            <button onClick={updateStatus} className="submit">
+                            <button
+                              onClick={() => updateStatus()}
+                              className="submit"
+                            >
                               Update
                             </button>
                           )}

@@ -3,8 +3,11 @@ import { useDispatch } from "react-redux";
 import { useAuth } from "../hooks/useAuth";
 import { RiLogoutBoxRLine } from "react-icons/ri";
 import { setUser } from "../redux/authSlice";
+import { IoMdArrowDropdown } from "react-icons/io";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [dropdown, setDropdown] = useState(false);
   // redux states
   const auth = useAuth();
   const dispatch = useDispatch();
@@ -27,16 +30,44 @@ const Navbar = () => {
         </Link>
 
         {auth && (
-          <div className="nav-t-r">
-            <Link
-              to={auth.user_role === "User" ? "/profile" : "/admin"}
-              className="font-semibold"
+          <div>
+            <div
+              className={`nav-t-r  shadow-2xl${
+                dropdown === true
+                  ? " bg-primary text-white"
+                  : "bg-white text-primary"
+              } `}
+              onClick={() => setDropdown(!dropdown)}
             >
-              {auth.user_name}
-            </Link>
-            <Link to="/login" onClick={handleLogout}>
-              <RiLogoutBoxRLine className="logout" />
-            </Link>
+              <button
+                to={auth.user_role === "User" ? "/profile" : "/admin"}
+                className="font-semibold"
+              >
+                {auth.user_name}
+              </button>
+              <IoMdArrowDropdown className="" />
+            </div>
+
+            {dropdown === true && (
+              <div className="dropdown shadow-2xl ">
+                <Link
+                  to={auth.user_role === "User" ? "/profile" : "/admin"}
+                  onClick={() => setDropdown(!dropdown)}
+                >
+                  Profile
+                </Link>
+                <hr />
+                <Link
+                  to="/login"
+                  onClick={() => {
+                    handleLogout();
+                    setDropdown(!dropdown);
+                  }}
+                >
+                  Logout
+                </Link>
+              </div>
+            )}
           </div>
         )}
         {!auth && (
