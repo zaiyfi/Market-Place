@@ -50,11 +50,17 @@ const ProductDetails = () => {
               <div className="grid grid-cols-2 gap-5" key={product._id}>
                 {/* Images  For    Product                                */}
                 <div className="flex flex-col gap-2">
-                  <img
-                    src={product.images[selectedIndex]}
-                    className="object-cover w-full h-96 rounded-md"
-                    alt=""
-                  />
+                  {product.images.length > 0 ? (
+                    <img
+                      src={product.images[selectedIndex]}
+                      className="object-cover w-full h-96 rounded-md"
+                      alt=""
+                    />
+                  ) : (
+                    <h1 className=" mt-4 text-center text-2xl">
+                      No Images Uploaded!
+                    </h1>
+                  )}
                   <div className="flex gap-5 mt-2 ">
                     {product.images.map((image, index) => (
                       <div className="flex gap-5" key={index}>
@@ -103,6 +109,7 @@ const ProductDetails = () => {
                         <p>Box Available</p>
                         <p>Warranty Available</p>
                         <p>Accessories Available</p>
+                        {product.location && <p>Location</p>}
                         <p>Price</p>
                       </div>
                       <div className="text-center">
@@ -128,6 +135,7 @@ const ProductDetails = () => {
                         <p>
                           {product.accessoriesAvailable === true ? "Yes" : "No"}
                         </p>
+                        <p>{product.location}</p>
                         <p>$ {product.price}</p>
                       </div>
                     </div>

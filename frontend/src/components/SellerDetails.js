@@ -26,11 +26,13 @@ function SellerDetails({ seller }) {
         <div className="flex justify-between">
           <div>
             <p>Name</p>
-            <p>Contact</p>
+            <p>Email</p>
+            {users.cellNo && <p>Cell No</p>}
           </div>
           <div>
             <p>{users.name}</p>
-            <p>+{formatCellNumber(users.cellNo)}</p>
+            <p>{users.email}</p>
+            {users.cellNo && <p>+{formatCellNumber(users.cellNo)}</p>}
           </div>
         </div>
       )}

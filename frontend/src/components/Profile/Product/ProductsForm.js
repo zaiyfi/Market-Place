@@ -204,6 +204,24 @@ const ProductsForm = ({
                   </Col>
                   <Col span={8}>
                     <Form.Item
+                      label="Location"
+                      name="location"
+                      rules={editForm ? "" : rules}
+                    >
+                      <select
+                        className="w-full border-2 outline-none p-1 rounded-md"
+                        rules={editForm ? "" : rules}
+                      >
+                        <option value="">Select</option>
+                        <option value="Punjab">PUNJAB</option>
+                        <option value="KPK">KPK</option>
+                        <option value="Sindh">SINDH</option>
+                        <option value="Balochistan">BALOCHISTAN</option>
+                      </select>
+                    </Form.Item>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item
                       label="Used (In Years)"
                       name="used"
                       rules={editForm ? "" : rules}
