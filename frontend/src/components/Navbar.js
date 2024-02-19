@@ -29,6 +29,8 @@ const Navbar = () => {
           MarketPlace
         </Link>
 
+        {/* Show this if user is logged in */}
+        {/* DropDown */}
         {auth && (
           <div>
             <div
@@ -70,6 +72,7 @@ const Navbar = () => {
             )}
           </div>
         )}
+        {/* Show this if User is not logged in */}
         {!auth && (
           <div>
             <Link to="/login">Login</Link>

@@ -62,7 +62,7 @@ const ProductDetails = () => {
                           src={image}
                           className={`w-36 h-20 object-cover rounded-md cursor-pointer p-2 ${
                             selectedIndex === index
-                              ? "border-2 border-green-700"
+                              ? "border-2 border-primary"
                               : ""
                           }`}
                           onClick={() => setSelectedIndex(index)}

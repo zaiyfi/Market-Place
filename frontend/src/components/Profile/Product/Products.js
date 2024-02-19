@@ -69,7 +69,7 @@ const Products = () => {
   // Deleteing the Product
   const handleDelete = async (productId) => {
     dispatch(setLoader(true));
-    const response = await fetch(`/products/${productId}`, {
+    const response = await fetch(`/api/products/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${auth.token}`,
@@ -79,11 +79,10 @@ const Products = () => {
     if (!response.ok) {
       dispatch(setLoader(false));
     }
-    if (response.ok) {
-      dispatch(deleteProduct(json));
-      console.log(store.getState());
-      dispatch(setLoader(false));
-    }
+
+    dispatch(deleteProduct(json));
+    dispatch(setLoader(false));
+    console.log(store.getState());
   };
 
   // JSX

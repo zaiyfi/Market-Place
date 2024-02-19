@@ -68,6 +68,7 @@ a:hover {
   top: 76px;
   right: 25px;
   width: 120px;
+  border: 1px solid black;
   border-radius: 10px;
   background-color: white;
   padding: 7px;
@@ -78,6 +79,9 @@ a:hover {
 .dropdown a {
   padding: 2px;
   margin: 0;
+}
+.dropdown a:hover {
+  color: #888888;
 }
 .logo {
   color: var(--primary);
