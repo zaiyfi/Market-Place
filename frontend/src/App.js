@@ -20,11 +20,11 @@ import store from "./redux/store";
 import Admin from "./pages/admin/Admin";
 import Page404 from "./pages/Page404";
 import ProductDetails from "./pages/ProductDetails";
+import FavProducts from "./components/Profile/Product/FavProducts";
 
 function App() {
   // Getting the state of loader
   const { loading } = useSelector((state) => state.loader);
-  const { auth } = useSelector((state) => state.auth);
 
   useEffect(() => {
     try {
@@ -45,13 +45,14 @@ function App() {
           <Route path={"/product/:productId"} element={<ProductDetails />} />
 
           <Route
-            path={auth && "/profile"}
+            path="/dashboard"
             element={
               <ProtectedUserRoute>
                 <Profile />
               </ProtectedUserRoute>
             }
           />
+
           <Route
             path="/admin"
             element={

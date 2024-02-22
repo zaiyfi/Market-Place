@@ -1,4 +1,5 @@
 const User = require("../models/userSchema");
+const Product = require("../models/productSchema");
 const jwt = require("jsonwebtoken");
 
 const createToken = (_id) => {
@@ -36,11 +37,11 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const { user, user_name, user_role } = await User.login(email, password);
+    const { user } = await User.login(email, password);
     // Createing Token
     const token = createToken(user._id);
 
-    res.status(200).json({ user_name, email, user_role, token });
+    res.status(200).json({ user, token });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -79,4 +80,36 @@ const updateStatus = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getUsers, updateStatus, getUser };
+// update the user favProducts Array
+
+const addFavProduct = async (req, res) => {
+  const { user_id, product_id } = req.params;
+
+  try {
+    const product = await Product.findById(product_id);
+    if (!product) {
+      res.status(404).json("NO SUCH PRODUCT FOUND!");
+    } else {
+      console.log("product Founded Successfully");
+    }
+    const updatedUser = await User.findByIdAndUpdate(
+      user_id,
+      { $push: { favProducts: product_id } },
+      { new: true }
+    );
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res
+      .status(400)
+      .json({ error: "Error while adding a product to favourites" });
+  }
+};
+
+module.exports = {
+  register,
+  login,
+  getUsers,
+  updateStatus,
+  getUser,
+  addFavProduct,
+};

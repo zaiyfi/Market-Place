@@ -8,7 +8,17 @@ export const authSlice = createSlice({
   },
   reducers: {
     setUser: (state, action) => {
-      state.auth = action.payload;
+      // Assuming action.payload contains the new user data
+      // If favProducts is present in the payload, merge it with the existing user data
+      if (action.payload && action.payload.favProducts !== undefined) {
+        state.auth = {
+          ...state.auth,
+          ...action.payload,
+        };
+      } else {
+        // If favProducts is not present, update the user data directly
+        state.auth = action.payload;
+      }
     },
   },
 });

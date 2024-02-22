@@ -7,6 +7,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    pic: {
+      type: String,
+      default:
+        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+    },
     email: {
       type: String,
       required: true,
@@ -31,6 +36,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    favProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }
 );
@@ -74,9 +80,8 @@ userSchema.statics.login = async function (email, password) {
   if (!match) {
     throw Error("Invalid Credentials!");
   }
-  const user_name = user.name;
-  const user_role = user.role;
-  return { user, user_name, user_role };
+
+  return { user };
 };
 
 module.exports = mongoose.model("User", userSchema);

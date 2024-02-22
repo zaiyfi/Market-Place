@@ -1,9 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../hooks/useAuth";
-import { RiLogoutBoxRLine } from "react-icons/ri";
 import { setUser } from "../redux/authSlice";
-import { IoMdArrowDropdown } from "react-icons/io";
+import { IoIosArrowDropdown } from "react-icons/io";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -21,10 +20,14 @@ const Navbar = () => {
     navigate("/login");
     dispatch(setUser(null));
   };
-
+  const path = window.location.pathname;
   return (
     <div className="sticky top-0">
-      <header className="shadow-md shadow-gray drop-shadow-md flex justify-between p-6 items-center">
+      <header
+        className={`shadow-md shadow-gray drop-shadow-md ${
+          path === "/dashboard" && " shadow-none drop-shadow-none border-b-2"
+        }  flex justify-between py-4 px-6 items-center`}
+      >
         <Link className="logo text-xl font-bold" to="/">
           MarketPlace
         </Link>
@@ -34,29 +37,28 @@ const Navbar = () => {
         {auth && (
           <div>
             <div
-              className={`nav-t-r  shadow-2xl${
-                dropdown === true
-                  ? " bg-primary text-white"
-                  : "bg-white text-primary"
-              } `}
+              className={`nav-t-r  shadow-2xl`}
               onClick={() => setDropdown(!dropdown)}
             >
-              <button
-                to={auth.user_role === "User" ? "/profile" : "/admin"}
-                className="font-semibold"
-              >
-                {auth.user_name}
-              </button>
-              <IoMdArrowDropdown className="" />
+              <img
+                src={auth.user.pic}
+                className="w-[40px] rounded-full "
+                alt=""
+              />
+              <IoIosArrowDropdown
+                className={`text-2xl transition-all ms-2 ${
+                  dropdown === true && "rotate-180"
+                }`}
+              />
             </div>
 
             {dropdown === true && (
               <div className="dropdown shadow-2xl ">
                 <Link
-                  to={auth.user_role === "User" ? "/profile" : "/admin"}
+                  to={auth.user.role === "User" ? "/dashboard" : "/admin"}
                   onClick={() => setDropdown(!dropdown)}
                 >
-                  Profile
+                  Dashboard
                 </Link>
                 <hr />
                 <Link

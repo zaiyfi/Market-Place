@@ -163,7 +163,7 @@ const HomeProducts = () => {
               <div className=" grid grid-cols-4 gap-5">
                 {/* Mapping start */}
                 {filteredProducts.map((product) => (
-                  <HomeProductsMap product={product} />
+                  <HomeProductsMap product={product} auth={auth} />
                 ))}
                 {/* Mapping End */}
               </div>
