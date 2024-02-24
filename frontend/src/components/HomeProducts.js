@@ -85,51 +85,51 @@ const HomeProducts = () => {
       <div className="flex gap-2">
         {/* Filters */}
         <div className="sidebar p-2 pt-6 pb-10 w-2/12 ">
-          <h1 className="text-xl w-1/3 border-b-black border-b-2 mb-2">
+          <h1 className="text-xl w-1/3 border-b-primary border-b-2 mb-2">
             Filters
           </h1>
           {/* Category Filters */}
-          <h1 className="text-lg">Category</h1>
+          <h1 className="text-lg text-black ">Category</h1>
           <div className="buttons">
             <button
               value="All"
               onClick={(e) => setFilters(e.target.value)}
-              className={filters === "All" && "underline"}
+              className={filters === "All" && "fil-css"}
             >
               All
             </button>
             <button
               value="Vehicle"
               onClick={(e) => setFilters(e.target.value)}
-              className={filters === "Vehicle" && "underline"}
+              className={filters === "Vehicle" && "fil-css"}
             >
               Vehicles
             </button>
             <button
               value="Electronics"
               onClick={(e) => setFilters(e.target.value)}
-              className={filters === "Electronics" && "underline"}
+              className={filters === "Electronics" && "fil-css"}
             >
               Electronics
             </button>
             <button
               value="Sports"
               onClick={(e) => setFilters(e.target.value)}
-              className={filters === "Sports" && "underline"}
+              className={filters === "Sports" && "fil-css"}
             >
               Sports
             </button>
             <button
               value="Home"
               onClick={(e) => setFilters(e.target.value)}
-              className={filters === "Home" && "underline"}
+              className={filters === "Home" && "fil-css"}
             >
               Home
             </button>
             <button
               value="Fashion"
               onClick={(e) => setFilters(e.target.value)}
-              className={filters === "Fashion" && "underline"}
+              className={filters === "Fashion" && "fil-css"}
             >
               Fashion
             </button>

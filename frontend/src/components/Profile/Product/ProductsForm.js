@@ -10,6 +10,7 @@ import { BiErrorCircle } from "react-icons/bi";
 import store from "../../../redux/store";
 import Images from "./images";
 import { createProduct } from "../../../redux/productSlice";
+import { createUserProduct } from "../../../redux/userProductSlice";
 
 const ProductsForm = ({
   showProductForm,
@@ -78,6 +79,7 @@ const ProductsForm = ({
       dispatch(setLoader(false));
       setShowProductForm(false);
       dispatch(createProduct(json));
+      dispatch(createUserProduct(json));
       console.log(store.getState());
     } catch (error) {
       setError(error.message);

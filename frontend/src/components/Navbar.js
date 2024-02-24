@@ -25,10 +25,15 @@ const Navbar = () => {
     <div className="sticky top-0">
       <header
         className={`shadow-md shadow-gray drop-shadow-md ${
-          path === "/dashboard" && " shadow-none drop-shadow-none border-b-2"
+          path === "/dashboard" && " shadow-none drop-shadow-none "
         }  flex justify-between py-4 px-6 items-center`}
       >
-        <Link className="logo text-xl font-bold" to="/">
+        <Link
+          className={`logo text-xl font-bold ${
+            path === "/dashboard" && "p-6 border-b"
+          }`}
+          to="/"
+        >
           MarketPlace
         </Link>
 

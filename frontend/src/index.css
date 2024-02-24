@@ -41,12 +41,12 @@ header {
 }
 header .logo {
   color: var(--primary);
-  font-family: Alata;
+  font-family: comfortaa;
   font-size: 1.7em;
 }
 a {
   margin: 0px 5px;
-  font-weight: 600;
+  font-weight: 500;
   transition: all 0.2s ease-in-out;
 }
 a:hover {
@@ -73,6 +73,7 @@ a:hover {
   width: 100%;
 }
 .dropdown a {
+  font-weight: 400;
   padding: 2px;
   margin: 0;
 }
@@ -128,7 +129,10 @@ header .logout {
 .col .content {
   position: relative;
 }
-
+.fil-css {
+  color: var(--primary);
+  text-decoration: underline;
+}
 .range-input {
   width: 100%; /* Set the width to 100% of its container */
   height: 8px; /* Adjust the height as needed */
@@ -138,7 +142,7 @@ header .logout {
   border-radius: 4px; /* Add rounded corners to the track */
 }
 .pricing input {
-  border: 1px solid var(--primary);
+  border: 1px solid black;
   width: 50%;
   outline: none;
   padding: 2px;
@@ -196,6 +200,7 @@ option {
   align-items: center;
 }
 .button {
+  color: var(--primary);
   padding: 7px 10px;
   border: 2px solid var(--primary);
   cursor: pointer;
@@ -253,25 +258,34 @@ form input:focus {
 .tab {
   overflow: hidden;
   border-bottom: 1px solid #ebe9e9;
-  margin: 0 5%;
-  width: 90%;
+  width: 20%;
+  position: absolute;
+  top: 126px;
+  padding: 0;
+  display: block;
+  border-right: 1px solid var(--primary);
+}
+.tab-content {
 }
 
 /* Style the buttons that are used to open the tab content */
-.tab button {
+.tab-content button {
+  width: 100%;
   background-color: inherit;
-  color: var(--primary);
+  color: black;
   float: left;
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
+  padding: 14px 0;
+  border-bottom: 1px solid #ebe9e9;
+  transition: all 0.3s ease;
 }
 
 /* Create an active/current tablink class */
 .tab button.activeB {
-  color: var(--primary);
+  color: white;
+  background-color: var(--primary);
 }
 
 /* Style the tab content */
@@ -280,29 +294,4 @@ form input:focus {
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
-}
-
-.tab button {
-  position: relative;
-  display: inline-block;
-  padding-bottom: 10px;
-  transition: all 0.3s ease;
-}
-
-.tab button::before {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: var(--primary);
-  transition: all 0.3s ease;
-}
-
-.tab button:hover::before {
-  width: 100%;
-}
-.tab button.activeB::before {
-  width: 100%;
 }

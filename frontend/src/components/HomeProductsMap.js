@@ -41,7 +41,7 @@ function HomeProductsMap({ product, auth }) {
             loading="lazy"
           />
         ) : (
-          <h1 className="  text-xl">No Images Uploaded!</h1>
+          <h1 className="  text-xl text-black">No Images Uploaded!</h1>
         )}
       </div>{" "}
       {/* Product info */}

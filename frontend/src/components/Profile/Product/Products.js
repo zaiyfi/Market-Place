@@ -6,7 +6,7 @@ import ProductsForm from "./ProductsForm";
 import store from "../../../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setLoader } from "../../../redux/loaderSlice";
-import { deleteProduct, setProducts } from "../../../redux/productSlice";
+import { deleteProduct } from "../../../redux/productSlice";
 
 // React Icons
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
@@ -14,6 +14,7 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 // Other modules
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { Button } from "antd";
+import { setUserProducts } from "../../../redux/userProductSlice";
 
 const Products = () => {
   // use States
@@ -22,8 +23,8 @@ const Products = () => {
   const [productId, setProductId] = useState(false);
 
   // Redux
-  const { products } = useSelector((state) => state.products);
   const { auth } = useSelector((state) => state.auth);
+  const { userProducts } = useSelector((state) => state.userProducts);
   const dispatch = useDispatch();
 
   // Slicing the description of product
@@ -38,32 +39,35 @@ const Products = () => {
 
   // Fetching The Products
   useEffect(() => {
-    dispatch(setProducts(null));
-    const fetchProducts = async () => {
-      try {
-        dispatch(setLoader(true));
-        const response = await fetch("/api/products/user-products", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${auth.token}`,
-          },
-        });
-        const json = await response.json();
-        if (!response.ok) {
-          console.log("response is not ok");
+    if (!userProducts.length > 0) {
+      const fetchProducts = async () => {
+        try {
+          dispatch(setLoader(true));
+          const response = await fetch("/api/products/user-products", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${auth.token}`,
+            },
+          });
+          const json = await response.json();
+          if (!response.ok) {
+            console.log("response is not ok");
+            dispatch(setLoader(false));
+          }
+          if (response.ok) {
+            dispatch(setUserProducts(json));
+            dispatch(setLoader(false));
+            console.log(store.getState());
+          }
+        } catch (error) {
           dispatch(setLoader(false));
+          console.log(error);
         }
-        if (response.ok) {
-          dispatch(setProducts(json));
-          dispatch(setLoader(false));
-          console.log(store.getState());
-        }
-      } catch (error) {
-        dispatch(setLoader(false));
-        console.log(error);
-      }
-    };
-    fetchProducts();
+      };
+      fetchProducts();
+    } else {
+      return;
+    }
   }, [dispatch, auth]);
 
   // Deleteing the Product
@@ -89,7 +93,7 @@ const Products = () => {
   return (
     <div className="antd mt-4">
       {/* Setting up the table to display Products */}
-      <div className="flex flex-col mx-4 overflow-hidden">
+      <div className="w-[75%] ms-[20%] me-[5%] flex flex-col  overflow-hidden">
         <div className="sm:-mx-6 lg:-mx-4">
           <div className="inline-block md:w-full py-2 sm:px-6 lg:px-8 ">
             <div className="overflow-hidden">
@@ -114,9 +118,9 @@ const Products = () => {
                   </tr>
                 </thead>
                 {/* Displaying the Fetched Products */}
-                {products &&
-                  products.length > 0 &&
-                  products.map((product) => (
+                {userProducts &&
+                  userProducts.length > 0 &&
+                  userProducts.map((product) => (
                     <tbody key={product._id}>
                       <tr className="border-b dark:border-neutral-500">
                         <td className="whitespace-nowrap  px-6 py-4">
@@ -153,7 +157,7 @@ const Products = () => {
                     </tbody>
                   ))}
               </table>
-              {products && products.length === 0 && (
+              {userProducts && userProducts.length === 0 && (
                 <div className="r p-6 text-lg font-bold">
                   <h1 className="text-center">No Products!</h1>
                 </div>
@@ -167,7 +171,7 @@ const Products = () => {
       <div className="flex justify-end">
         <Button
           type="primary"
-          className="me-4"
+          className="me-[10%]"
           open={showProductForm}
           onClick={() => setShowProductForm(true)}
         >

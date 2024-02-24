@@ -33,7 +33,7 @@ const Login = () => {
         </div>
       )} */}
       <form className="form w-full max-w-lg" onSubmit={handleSubmit}>
-        <h2>Login</h2>
+        <h2 className="text-primary">Login</h2>
         <div className="mb-2 flex justify-between">
           <div>
             <h3 className="font-bold text-base">Admin:</h3>
