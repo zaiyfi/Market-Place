@@ -2,18 +2,25 @@ import { useState } from "react";
 // React Icons
 import { GrStatusGood } from "react-icons/gr";
 import { FaUser } from "react-icons/fa";
+import { PiPackageFill } from "react-icons/pi";
 
 // Custom hook and component
 import useAddProduct from "../hooks/useAddProduct";
 import Products from "../components/Profile/Product/Products";
+import ProfileDetails from "../components/Profile/ProfileDetails";
 
 const Profile = () => {
   const [tab, setTab] = useState(1);
   const [activeButton, setActiveButton] = useState(1);
   const { product } = useAddProduct();
 
+  const tabActiveIndex = (tabIndex) => {
+    setTab(tabIndex);
+    setActiveButton(tabIndex);
+  };
+
   return (
-    <div>
+    <div className="flex my-4  select-none">
       {/* Product Added Message Popup */}
       {product && (
         <div className="error-backend flex border-2 border-green-500 bg-white p-2 rounded">
@@ -21,34 +28,26 @@ const Profile = () => {
           <p className="text-black">Prodcut added successfully!</p>
         </div>
       )}
-      <div className="tab border-e ">
-        <div className="tab-content">
-          <button
-            className={`tablinks ${
-              activeButton === 2 ? "activeB" : ""
-            } flex justify-center
-            `}
-            onClick={() => {
-              setTab(2);
-              setActiveButton(2);
-            }}
-          >
-            <FaUser className=" me-2 mt-1  shadow-lg shadow-gray-400 rounded-md" />
-            Profile
-          </button>
-          <button
-            className={`tablinks ${activeButton === 1 ? "activeB" : ""}`}
-            onClick={() => {
-              setTab(1);
-              setActiveButton(1);
-            }}
-          >
-            Products
-          </button>
+      <div className="tab border-e  md:w-[15%]">
+        <div
+          className={`links  ${activeButton === 1 ? "activeB" : ""}`}
+          onClick={() => tabActiveIndex(1)}
+        >
+          <FaUser className=" icons" />
+
+          <button className="tablinks ">Profile</button>
+        </div>
+        <div
+          className={`links ${activeButton === 2 ? "activeB" : ""}`}
+          onClick={() => tabActiveIndex(2)}
+        >
+          <PiPackageFill className=" icons" />
+
+          <button className="tablinks">Prodcuts</button>
         </div>
       </div>
-
-      {tab === 1 && <Products />}
+      {tab === 1 && <ProfileDetails />}
+      {tab === 2 && <Products />}
     </div>
   );
 };

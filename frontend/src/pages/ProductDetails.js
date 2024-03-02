@@ -9,6 +9,7 @@ import { setProducts } from "../redux/productSlice";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import store from "../redux/store";
 import SellerDetails from "../components/SellerDetails";
+import { setViewedProducts } from "../redux/authSlice";
 
 const ProductDetails = () => {
   // Redux states

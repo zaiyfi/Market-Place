@@ -5,14 +5,20 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { CiHeart } from "react-icons/ci";
 import { FaHeart } from "react-icons/fa";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/authSlice";
+import {
+  setFavProducts,
+  setRemoveFavProducts,
+  setViewedProducts,
+} from "../redux/authSlice";
+import store from "../redux/store";
 
 function HomeProductsMap({ product, auth }) {
-  const [saved, setSaved] = useState();
   const dispatch = useDispatch();
+
+  // Fav Products
   const addFavProduct = async () => {
     const response = await fetch(
-      `/api/auth/favProducts/${auth.user._id}/${product._id}`,
+      `/api/auth/addFavProducts/${auth.user._id}/${product._id}`,
       {
         method: "PATCH",
         headers: {
@@ -26,11 +32,64 @@ function HomeProductsMap({ product, auth }) {
     }
     if (response.ok) {
       console.log(json);
-      dispatch(setUser(json));
+      dispatch(setFavProducts(product._id));
+      console.log(store.getState());
     }
   };
+  // Remove FavProducts
+  const removeFavProduct = async () => {
+    const response = await fetch(
+      `/api/auth/remove/removeFavProducts/${auth.user._id}/${product._id}`,
+      {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      }
+    );
+    const json = await response.json();
+    if (!response.ok) {
+      console.log(json);
+    }
+    if (response.ok) {
+      console.log(json);
+      dispatch(setRemoveFavProducts(product._id));
+      console.log(store.getState());
+    }
+  };
+
+  // product View
+  const ProductDetails = () => {
+    window.open(`/product/${product._id}`, "_blank");
+    const user = auth.user;
+    const addView = async () => {
+      const response = await fetch(
+        `/api/auth/viewProducts/${product._id}/${auth.user._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            authorization: `Bearer ${auth.token}`,
+          },
+        }
+      );
+      const json = await response.json();
+      console.log(json);
+      if (!response.ok) {
+        console.log("views REsponse is not Ok");
+      }
+      if (response.ok && !user.viewedProducts.includes(product._id)) {
+        dispatch(setViewedProducts(product._id));
+        console.log("product view added successfully!");
+        console.log(store.getState());
+      }
+    };
+    addView();
+  };
   return (
-    <div className="col shadow-lg shadow-gray relative" key={product._id}>
+    <div
+      className="col shadow-lg shadow-gray border-2  relative"
+      key={product._id}
+    >
       {/* Product Image */}
       <div className=" flex items-center justify-center relative w-full h-2/3">
         {product.images.length > 0 ? (
@@ -48,13 +107,17 @@ function HomeProductsMap({ product, auth }) {
       <div className="content px-4 pt-2">
         <div className="flex justify-between">
           <h2 className="font-extrabold text-lg">${product.price}</h2>
-          <CiHeart
-            className=" text-2xl cursor-pointer"
-            onClick={() => {
-              setSaved(product);
-              addFavProduct();
-            }}
-          />
+          {auth && auth.user.favProducts.includes(product._id) ? (
+            <FaHeart
+              className="text-xl cursor-pointer text-red-500"
+              onClick={removeFavProduct}
+            />
+          ) : (
+            <CiHeart
+              className=" text-2xl cursor-pointer"
+              onClick={addFavProduct}
+            />
+          )}
         </div>
         <h2>{product.name}</h2>
         <p className=" text-xs font-light p-0">
@@ -64,7 +127,7 @@ function HomeProductsMap({ product, auth }) {
         </p>
         <h2
           className="cursor-pointer underline"
-          onClick={() => window.open(`/product/${product._id}`, "_blank")}
+          onClick={() => ProductDetails()}
         >
           Product Details
         </h2>

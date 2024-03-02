@@ -15,6 +15,7 @@ const HomeProducts = () => {
   // Redux States
   const dispatch = useDispatch();
   const { auth } = useSelector((state) => state.auth);
+  const { products } = useSelector((state) => state.products);
 
   const [filters, setFilters] = useState("All");
   const [minPrice, setMinPrice] = useState(0);
@@ -23,25 +24,26 @@ const HomeProducts = () => {
 
   // Fetching Products
   useEffect(() => {
-    const fetchProducts = async () => {
-      dispatch(setLoader(true));
+    if (!products.length > 0) {
+      const fetchProducts = async () => {
+        dispatch(setLoader(true));
 
-      const response = await fetch("/api/products", {
-        method: "GET",
-      });
-      const json = await response.json();
-      if (!response.ok) {
-        console.log("response is not ok");
+        const response = await fetch("/api/products", {
+          method: "GET",
+        });
+        const json = await response.json();
+        if (!response.ok) {
+          console.log("response is not ok");
+          dispatch(setLoader(false));
+        }
+        dispatch(setProducts(json));
         dispatch(setLoader(false));
-      }
-      dispatch(setProducts(json));
-      console.log(store.getState());
 
-      dispatch(setLoader(false));
-    };
-    fetchProducts();
+        console.log(store.getState());
+      };
+      fetchProducts();
+    }
   }, [dispatch, auth]);
-  const { products } = useSelector((state) => state.products);
 
   // Search Query Filter
   const handleSearchQuery = (e) => {
@@ -82,9 +84,9 @@ const HomeProducts = () => {
           <option value="">Products (Newest to Oldest)</option>
         </select>
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 w-[100%]">
         {/* Filters */}
-        <div className="sidebar p-2 pt-6 pb-10 w-2/12 ">
+        <div className="sidebar p-2 pt-6 pb-10 md:w-2/12 ">
           <h1 className="text-xl w-1/3 border-b-primary border-b-2 mb-2">
             Filters
           </h1>
@@ -152,7 +154,7 @@ const HomeProducts = () => {
         {/* Filters End */}
 
         {/*  Mapping     Products */}
-        <div className="products w-10/12">
+        <div className="products md:w-10/12">
           <div className="h-auto relative">
             {filteredProducts.length === 0 && (
               <div className="flex justify-center">

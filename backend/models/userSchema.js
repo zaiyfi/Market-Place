@@ -37,6 +37,7 @@ const userSchema = new mongoose.Schema(
       default: "",
     },
     favProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
+    viewedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   },
   { timestamps: true }
 );
@@ -80,8 +81,8 @@ userSchema.statics.login = async function (email, password) {
   if (!match) {
     throw Error("Invalid Credentials!");
   }
-
-  return { user };
+  const user_id = user._id;
+  return { user, user_id };
 };
 
 module.exports = mongoose.model("User", userSchema);

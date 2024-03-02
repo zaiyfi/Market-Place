@@ -15,7 +15,7 @@ function SellerDetails({ seller }) {
       dispatch(setAllUsers(json));
     };
     fetchUser();
-  });
+  }, []);
   const formatCellNumber = (cellNumber) => {
     return cellNumber.replace(/^(\d{2})(\d{3})/, "$1 $2 ");
   };

@@ -37,39 +37,6 @@ const Products = () => {
     return `${truncatedWords.join(" ")}...`;
   };
 
-  // Fetching The Products
-  useEffect(() => {
-    if (!userProducts.length > 0) {
-      const fetchProducts = async () => {
-        try {
-          dispatch(setLoader(true));
-          const response = await fetch("/api/products/user-products", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${auth.token}`,
-            },
-          });
-          const json = await response.json();
-          if (!response.ok) {
-            console.log("response is not ok");
-            dispatch(setLoader(false));
-          }
-          if (response.ok) {
-            dispatch(setUserProducts(json));
-            dispatch(setLoader(false));
-            console.log(store.getState());
-          }
-        } catch (error) {
-          dispatch(setLoader(false));
-          console.log(error);
-        }
-      };
-      fetchProducts();
-    } else {
-      return;
-    }
-  }, [dispatch, auth]);
-
   // Deleteing the Product
   const handleDelete = async (productId) => {
     dispatch(setLoader(true));
@@ -91,12 +58,12 @@ const Products = () => {
 
   // JSX
   return (
-    <div className="antd mt-4">
+    <div className="w-[75%]  me-[5%] ">
       {/* Setting up the table to display Products */}
-      <div className="w-[75%] ms-[20%] me-[5%] flex flex-col  overflow-hidden">
+      <div className="w-[100%]  flex flex-col ">
         <div className="sm:-mx-6 lg:-mx-4">
-          <div className="inline-block md:w-full py-2 sm:px-6 lg:px-8 ">
-            <div className="overflow-hidden">
+          <div className="inline-block md:w-full pb-2 sm:px-6 lg:px-8 ">
+            <div className="">
               <table className="min-w-full text-center text-sm font-light">
                 <thead className="border-b font-medium  text-white dark:border-neutral-500 ">
                   <tr>

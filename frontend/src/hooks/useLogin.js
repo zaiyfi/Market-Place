@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../redux/authSlice";
 import { setLoader } from "../redux/loaderSlice";
+import store from "../redux/store";
 export const useLogin = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
@@ -30,6 +31,7 @@ export const useLogin = () => {
         navigate("/");
         // Updating the Auth Context
         dispatch(setUser(json));
+        console.log(store.getState());
       }
     } catch (error) {
       console.error("An error occurred:", error);

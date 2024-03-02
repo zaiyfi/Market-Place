@@ -33,9 +33,7 @@ h1 {
 
 /*        Navigation    */
 header {
-  background-color: whitesmoke;
   user-select: none;
-  position: sticky;
   width: 100%;
   z-index: 9999;
 }
@@ -53,29 +51,41 @@ a:hover {
   color: var(--primary);
 }
 .nav-t-r {
+  padding: 10px;
   display: flex;
   align-items: center;
   cursor: pointer;
-  border-radius: 30px;
+  border-radius: 10px;
 }
 
 .dropdown {
+  padding: 5px;
   position: absolute;
-  top: 76px;
-  right: 25px;
-  width: 120px;
-  border: 1px solid black;
+  top: 70px;
+  right: 10px;
+  width: 180px;
   border-radius: 10px;
   background-color: white;
-  padding: 7px;
+}
+.links {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
+}
+.dropdown .links:hover {
+  color: var(--primary);
+}
+.icons {
+  margin: 0 10px;
 }
 .dropdown button {
-  width: 100%;
-}
-.dropdown a {
   font-weight: 400;
-  padding: 2px;
-  margin: 0;
+  margin: 0px;
+}
+.icon-rotate,
+.dropdown p {
+  transition: 0.1s;
 }
 .dropdown a:hover {
   color: #6e6e6e;
@@ -257,35 +267,22 @@ form input:focus {
 /* Style the tab */
 .tab {
   overflow: hidden;
-  border-bottom: 1px solid #ebe9e9;
-  width: 20%;
-  position: absolute;
-  top: 126px;
+  position: relative;
   padding: 0;
   display: block;
-  border-right: 1px solid var(--primary);
-}
-.tab-content {
+  margin-right: 2px;
 }
 
-/* Style the buttons that are used to open the tab content */
-.tab-content button {
-  width: 100%;
-  background-color: inherit;
-  color: black;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 0;
-  border-bottom: 1px solid #ebe9e9;
-  transition: all 0.3s ease;
+.tab .links {
+  width: 80%;
+  margin-left: 20%;
+  padding: 10px 0;
 }
-
-/* Create an active/current tablink class */
-.tab button.activeB {
-  color: white;
-  background-color: var(--primary);
+.tab .icons {
+  margin-left: 0px;
+}
+.tab .activeB {
+  color: var(--primary);
 }
 
 /* Style the tab content */
