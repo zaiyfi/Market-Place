@@ -12,16 +12,16 @@ import Register from "./pages/auth/Register";
 // Components
 import Navbar from "./components/Navbar";
 import LoaderSpinner from "./components/loaderSpinner";
-import ProtectedUserRoute from "./components/ProtectedUserRoute";
-import ProtectedAdminRoute from "./components/ProtectedAdminRoute";
+import ProtectedUserRoute from "./components/Others/ProtectedUserRoute";
+import ProtectedAdminRoute from "./components/Others/ProtectedAdminRoute";
 
 // Redux Store
 import store from "./redux/store";
 import Admin from "./pages/admin/Admin";
 import Page404 from "./pages/Page404";
 import ProductDetails from "./pages/ProductDetails";
-import FavProducts from "./components/Profile/Product/FavProducts";
-import { setUser } from "./redux/authSlice";
+import ProtectedLogin from "./components/Others/ProtectedLogin";
+import UserData from "./pages/UserData";
 
 function App() {
   // Getting the state of loader
@@ -31,15 +31,11 @@ function App() {
 
   useEffect(() => {
     try {
-      if (!auth.token) {
-        dispatch(setUser(null));
-        localStorage.removeItem("auth");
-      }
       console.log(store.getState());
     } catch (error) {
       console.log("User is not Logged in!");
     }
-  }, [auth]);
+  }, [dispatch]);
 
   // Routing
   return (
@@ -49,7 +45,14 @@ function App() {
         <Navbar />
         <Routes>
           <Route path={"/"} element={<Home />} />
-          <Route path={"/product/:productId"} element={<ProductDetails />} />
+          <Route
+            path={"/product/:productId"}
+            element={
+              <ProtectedLogin>
+                <ProductDetails />
+              </ProtectedLogin>
+            }
+          />
 
           <Route
             path="/dashboard"
@@ -66,6 +69,14 @@ function App() {
               <ProtectedAdminRoute>
                 <Admin />
               </ProtectedAdminRoute>
+            }
+          />
+          <Route
+            path="/seller/profile/:userId"
+            element={
+              <ProtectedLogin>
+                <UserData />{" "}
+              </ProtectedLogin>
             }
           />
           {/* Sign in/up Routes */}

@@ -26,10 +26,7 @@ export const useLogin = () => {
         setError(json.error);
       } else {
         dispatch(setLoader(false));
-        // Saving User TO the Local Storage
-        localStorage.setItem("auth", JSON.stringify(json));
         navigate("/");
-        // Updating the Auth Context
         dispatch(setUser(json));
         console.log(store.getState());
       }

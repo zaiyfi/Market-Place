@@ -1,9 +1,11 @@
 const User = require("../models/userSchema");
 const Product = require("../models/productSchema");
+const cloudinary = require("../cloudinaryConfig");
+
 const jwt = require("jsonwebtoken");
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "10s" });
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
 };
 
 // Register Controller
@@ -126,6 +128,31 @@ const removeFavProduct = async (req, res) => {
   }
 };
 
+// updating user img
+
+const updateImg = async (req, res) => {
+  const image = req.file.path;
+  const { user_id } = req.params;
+
+  try {
+    // Uploading Image to Cloudinary
+    const result = await cloudinary.uploader.upload(image, {
+      folder: "MarketPlace/user",
+    });
+    const update = await User.findByIdAndUpdate(
+      user_id,
+      {
+        pic: result.secure_url,
+        pocPublicId: result.public_id,
+      },
+      { new: true }
+    );
+    await res.status(200).json(result.secure_url);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 // Adding products to users viewedProducts field and adding view to product
 const viewedProducts = async (req, res) => {
   const { product_id, userId } = req.params;
@@ -165,4 +192,5 @@ module.exports = {
   addFavProduct,
   viewedProducts,
   removeFavProduct,
+  updateImg,
 };

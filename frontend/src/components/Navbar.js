@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useAuth } from "../hooks/useAuth";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../redux/authSlice";
 // Icons
 import { IoIosArrowDropdown } from "react-icons/io";
@@ -15,7 +14,7 @@ import { useState } from "react";
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
   // redux states
-  const auth = useAuth();
+  const { auth } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   // Router Navigate
@@ -58,7 +57,7 @@ const Navbar = () => {
 
         <div>
           <div
-            className={`nav-t-r hover:bg-primary hover:text-white ${
+            className={`round-img nav-t-r hover:bg-primary hover:text-white ${
               dropdown === true && "bg-primary text-white"
             }`}
             onClick={() => setDropdown(!dropdown)}
@@ -66,7 +65,7 @@ const Navbar = () => {
             {auth ? (
               <img
                 src={auth.user.pic}
-                className="w-[28px] rounded-full me-1"
+                className="w-[28px] h-[28px] rounded-full me-1"
                 alt=""
               />
             ) : (

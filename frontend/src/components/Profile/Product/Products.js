@@ -14,7 +14,6 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 // Other modules
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { Button } from "antd";
-import { setUserProducts } from "../../../redux/userProductSlice";
 
 const Products = () => {
   // use States

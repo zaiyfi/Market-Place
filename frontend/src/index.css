@@ -30,7 +30,9 @@ h1 {
 .product-details p {
   font-size: 0.9em;
 }
-
+.round-img img {
+  object-fit: cover;
+}
 /*        Navigation    */
 header {
   user-select: none;

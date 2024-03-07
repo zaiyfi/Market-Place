@@ -10,6 +10,7 @@ import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import store from "../redux/store";
 import SellerDetails from "../components/SellerDetails";
 import { setViewedProducts } from "../redux/authSlice";
+import ProductInfo from "../components/Others/ProductInfo";
 
 const ProductDetails = () => {
   // Redux states
@@ -88,71 +89,26 @@ const ProductDetails = () => {
                     </p>
                   </div>
                 </div>
-                {/* Product      Info       Start                     */}
+                {/* Product      Info                          */}
                 <div className="flex flex-col gap-2" key={product._id}>
-                  {" "}
                   <div>
                     <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
                     <span>{product.description}</span>
                   </div>
                   <hr className="my-2" />
-                  {/* Product      and       Owner      Details      Start */}
+                  {/* Product      and       Owner      Details     */}
                   <div>
-                    {" "}
-                    <h1 className="text-xl font-bold">Product Details</h1>
-                    {/* Product Details Start */}
-                    <div className="flex justify-between w-full">
-                      <div>
-                        <p>Category</p>
-                        <p>Purchased</p>
-                        <p>Used</p>
-                        <p>Bill Available</p>
-                        <p>Box Available</p>
-                        <p>Warranty Available</p>
-                        <p>Accessories Available</p>
-                        {product.location && <p>Location</p>}
-                        <p>Price</p>
-                      </div>
-                      <div className="text-center">
-                        <p>{product.category}</p>
-                        <p>
-                          {new Date(
-                            Date.now() -
-                              product.used * 365 * 24 * 60 * 60 * 1000
-                          ).getFullYear()}
-                        </p>
-                        <p>
-                          {product.used === 0
-                            ? "Not Used"
-                            : product.used === 1
-                            ? "1 year"
-                            : `${product.used} years`}
-                        </p>
-                        <p>{product.billAvailable === true ? "Yes" : "No"}</p>
-                        <p>{product.boxAvailable === true ? "Yes" : "No"}</p>
-                        <p>
-                          {product.warrantyAvailable === true ? "Yes" : "No"}
-                        </p>
-                        <p>
-                          {product.accessoriesAvailable === true ? "Yes" : "No"}
-                        </p>
-                        <p>{product.location}</p>
-                        <p>$ {product.price}</p>
-                      </div>
-                    </div>
-                    {/* Product Details End */}
+                    <ProductInfo product={product} />
                     <hr className="my-2" />
+
                     {/* Owner Details */}
-                    <h1 className="text-xl font-bold">Owner Details</h1>
                     {auth ? (
                       <SellerDetails seller={product.seller} />
                     ) : (
                       "You are not logged in!"
                     )}
                   </div>
-                  {/* Product      and       Owner      Details      End */}
                 </div>
-                {/* Product       Info        End */}
               </div>
             ))}
       </div>

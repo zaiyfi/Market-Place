@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema(
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
+    picPublicId: {
+      type: String,
+      default: "",
+    },
     email: {
       type: String,
       required: true,
@@ -32,10 +36,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "User",
     },
-    profilePicture: {
-      type: String,
-      default: "",
-    },
+
     favProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     viewedProducts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
   },

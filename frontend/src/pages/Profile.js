@@ -7,11 +7,14 @@ import { PiPackageFill } from "react-icons/pi";
 // Custom hook and component
 import useAddProduct from "../hooks/useAddProduct";
 import Products from "../components/Profile/Product/Products";
-import ProfileDetails from "../components/Profile/ProfileDetails";
+import ProfileDetails from "../components/Profile/Profiles/ProfileDetails";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const [tab, setTab] = useState(1);
   const [activeButton, setActiveButton] = useState(1);
+  const { auth } = useSelector((state) => state.auth);
+  const { products } = useSelector((state) => state.products);
   const { product } = useAddProduct();
 
   const tabActiveIndex = (tabIndex) => {
@@ -46,7 +49,13 @@ const Profile = () => {
           <button className="tablinks">Prodcuts</button>
         </div>
       </div>
-      {tab === 1 && <ProfileDetails />}
+      {tab === 1 && (
+        <ProfileDetails
+          user={auth.user}
+          products={products}
+          token={auth.token}
+        />
+      )}
       {tab === 2 && <Products />}
     </div>
   );

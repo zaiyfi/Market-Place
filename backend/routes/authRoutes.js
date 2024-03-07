@@ -12,7 +12,9 @@ const {
   addFavProduct,
   viewedProducts,
   removeFavProduct,
+  updateImg,
 } = require("../controllers/authController");
+const upload = require("../middleware/uploadImage");
 
 // Setting up Auth Routes
 router.post("/register", register);
@@ -29,11 +31,18 @@ router.patch(
   requireAuth,
   addFavProduct
 );
+// Update User Image
+router.patch(
+  "/image/upload/:user_id",
+  requireAuth,
+  upload.single("file"),
+  updateImg
+);
 
 // Add product to viewedProduct
-router.patch("/viewProducts/:product_id/:userId", requireAuth, viewedProducts);
+router.patch("/viewProducts/:product_id/:user_id", requireAuth, viewedProducts);
 
-// Get All Users Route
+// Get All Users
 router.get("/users", getUsers);
 router.get("/user/:user_id", getUser);
 

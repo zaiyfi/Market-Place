@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAllUsers } from "../redux/UsersSlice";
+import { Link } from "react-router-dom";
+import store from "../redux/store";
 
 function SellerDetails({ seller }) {
   const dispatch = useDispatch();
@@ -8,34 +10,45 @@ function SellerDetails({ seller }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const response = await fetch(`/api/auth/user/${seller}`, {
+      const response = await fetch(`/api/auth/users`, {
         method: "GET",
       });
       const json = await response.json();
       dispatch(setAllUsers(json));
+      console.log(store.getState());
     };
-    fetchUser();
-  }, []);
+    if (!users.length > 0) {
+      fetchUser();
+    }
+  }, [users.length, dispatch]);
+  const user = users.length > 0 ? users.find((u) => u._id === seller) : "null";
   const formatCellNumber = (cellNumber) => {
     return cellNumber.replace(/^(\d{2})(\d{3})/, "$1 $2 ");
   };
 
   return (
     <div>
-      {users && (
+      <h1 className="text-xl font-bold">Owner Details</h1>
+
+      {user && (
         <div className="flex justify-between">
           <div>
             <p>Name</p>
             <p>Email</p>
-            {users.cellNo && <p>Cell No</p>}
+            {user.cellNo && <p>Cell No</p>}
           </div>
           <div>
-            <p>{users.name}</p>
-            <p>{users.email}</p>
-            {users.cellNo && <p>+{formatCellNumber(users.cellNo)}</p>}
+            <p>{user.name}</p>
+            <p>{user.email}</p>
+            {user.cellNo && <p>+{formatCellNumber(user.cellNo)}</p>}
           </div>
         </div>
       )}
+      <Link to={`/seller/profile/${user._id}`}>
+        <button className="bg-primary text-white p-2 hover:bg-secondary rounded-full ">
+          Seller Profile
+        </button>
+      </Link>
     </div>
   );
 }

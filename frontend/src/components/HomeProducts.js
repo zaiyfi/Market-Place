@@ -24,9 +24,12 @@ const HomeProducts = () => {
 
   // Fetching Products
   useEffect(() => {
+    dispatch(setLoader(false));
+
     if (!products.length > 0) {
       const fetchProducts = async () => {
         dispatch(setLoader(true));
+        console.log("Loader set to true");
 
         const response = await fetch("/api/products", {
           method: "GET",
@@ -36,10 +39,13 @@ const HomeProducts = () => {
           console.log("response is not ok");
           dispatch(setLoader(false));
         }
-        dispatch(setProducts(json));
-        dispatch(setLoader(false));
+        if (response.ok) {
+          dispatch(setProducts(json));
+          dispatch(setLoader(false));
+          console.log("Loader set to false");
 
-        console.log(store.getState());
+          console.log(store.getState());
+        }
       };
       fetchProducts();
     }
@@ -165,7 +171,11 @@ const HomeProducts = () => {
               <div className=" grid grid-cols-4 gap-5">
                 {/* Mapping start */}
                 {filteredProducts.map((product) => (
-                  <HomeProductsMap product={product} auth={auth} />
+                  <HomeProductsMap
+                    product={product}
+                    user={auth.user}
+                    token={auth.token}
+                  />
                 ))}
                 {/* Mapping End */}
               </div>

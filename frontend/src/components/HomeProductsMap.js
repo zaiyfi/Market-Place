@@ -12,48 +12,52 @@ import {
 } from "../redux/authSlice";
 import store from "../redux/store";
 
-function HomeProductsMap({ product, auth }) {
+function HomeProductsMap({ product, user, token }) {
   const dispatch = useDispatch();
 
   // Fav Products
   const addFavProduct = async () => {
+    dispatch(setFavProducts(product._id));
+
     const response = await fetch(
-      `/api/auth/addFavProducts/${auth.user._id}/${product._id}`,
+      `/api/auth/addFavProducts/${user._id}/${product._id}`,
       {
         method: "PATCH",
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
     const json = await response.json();
     if (!response.ok) {
       console.log(json);
+      dispatch(setRemoveFavProducts(product._id));
     }
     if (response.ok) {
       console.log(json);
-      dispatch(setFavProducts(product._id));
       console.log(store.getState());
     }
   };
   // Remove FavProducts
   const removeFavProduct = async () => {
+    dispatch(setRemoveFavProducts(product._id));
+
     const response = await fetch(
-      `/api/auth/remove/removeFavProducts/${auth.user._id}/${product._id}`,
+      `/api/auth/remove/removeFavProducts/${user._id}/${product._id}`,
       {
         method: "PATCH",
         headers: {
-          Authorization: `Bearer ${auth.token}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
     const json = await response.json();
     if (!response.ok) {
       console.log(json);
+      dispatch(setFavProducts(product._id));
     }
     if (response.ok) {
       console.log(json);
-      dispatch(setRemoveFavProducts(product._id));
       console.log(store.getState());
     }
   };
@@ -61,14 +65,13 @@ function HomeProductsMap({ product, auth }) {
   // product View
   const ProductDetails = () => {
     window.open(`/product/${product._id}`, "_blank");
-    const user = auth.user;
     const addView = async () => {
       const response = await fetch(
-        `/api/auth/viewProducts/${product._id}/${auth.user._id}`,
+        `/api/auth/viewProducts/${product._id}/${user._id}`,
         {
           method: "PATCH",
           headers: {
-            authorization: `Bearer ${auth.token}`,
+            authorization: `Bearer ${token}`,
           },
         }
       );
@@ -107,7 +110,7 @@ function HomeProductsMap({ product, auth }) {
       <div className="content px-4 pt-2">
         <div className="flex justify-between">
           <h2 className="font-extrabold text-lg">${product.price}</h2>
-          {auth && auth.user.favProducts.includes(product._id) ? (
+          {user && user.favProducts.includes(product._id) ? (
             <FaHeart
               className="text-xl cursor-pointer text-red-500"
               onClick={removeFavProduct}
