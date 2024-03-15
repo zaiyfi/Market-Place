@@ -10,6 +10,7 @@ const {
   updateProduct,
   deleteProduct,
   deleteProductImage,
+  addReview,
 } = require("../controllers/productController");
 
 // setting the router
@@ -20,6 +21,7 @@ const router = require("express").Router();
 // Create/Update Products
 router.post("/add", requireAuth, addProduct);
 router.patch("/:_id", requireAuth, updateProduct);
+router.patch("/addReview/:productId", requireAuth, addReview);
 
 // Get Single/All Products
 router.get("/", getProducts);

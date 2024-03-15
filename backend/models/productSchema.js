@@ -24,7 +24,6 @@ const productSchema = new mongoose.Schema(
     },
     location: {
       type: String,
-      required: true,
     },
     images: {
       type: Array,
@@ -56,7 +55,6 @@ const productSchema = new mongoose.Schema(
     },
     sellerEmail: {
       type: String,
-      required: true,
     },
     status: {
       type: String,
@@ -66,6 +64,24 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    reviews: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User", // Assuming you have a User model
+          required: true,
+        },
+        comment: {
+          type: String,
+          required: true,
+        },
+        rating: {
+          type: Number,
+          required: true,
+        },
+      },
+      { timestamps: true },
+    ],
   },
   { timestamps: true }
 );

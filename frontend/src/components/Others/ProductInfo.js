@@ -1,7 +1,7 @@
 const ProductInfo = ({ product }) => {
   return (
     <div className="">
-      <h1 className="text-xl font-bold">Product Details</h1>
+      <h1 className=" ">Product Details</h1>
 
       <div className="flex justify-between w-full">
         <div>

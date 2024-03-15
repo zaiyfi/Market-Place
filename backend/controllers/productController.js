@@ -53,7 +53,7 @@ const uploadImage = async (req, res) => {
       { _id },
       { $push: { images: result.secure_url } }
     );
-    res.status(200).json(result);
+    res.status(200).json(result.secure_url);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -62,9 +62,15 @@ const uploadImage = async (req, res) => {
 // Getting all Products
 const getProducts = async (req, res) => {
   try {
-    const products = await Product.find().sort({
-      createdAt: -1,
-    });
+    const products = await Product.find()
+      .sort({
+        createdAt: -1,
+      })
+      .populate({
+        path: "reviews.user",
+        model: "User",
+        select: "name pic",
+      });
     res.status(200).json(products);
   } catch (error) {
     res.status(404).json({ error: "No Such Product Exists!" });
@@ -139,6 +145,40 @@ const deleteProductImage = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+// Adding reviews to products
+const addReview = async (req, res) => {
+  const { user, comment, rating } = req.body;
+  const { productId } = req.params;
+
+  try {
+    console.log(productId);
+    console.log({ user, comment, rating });
+
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    // Add the review to the product's reviews array
+    product.reviews.push({ user, comment, rating });
+
+    // Save the updated product
+    await product.save();
+
+    await product.populate({
+      path: "reviews.user",
+      model: "User",
+      select: "name pic",
+    });
+
+    res.status(201).json(product);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 module.exports = {
   addProduct,
   uploadImage,
@@ -147,4 +187,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   deleteProductImage,
+  addReview,
 };

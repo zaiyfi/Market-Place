@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { setUser } from "../redux/authSlice";
 import { setLoader } from "../redux/loaderSlice";
 import store from "../redux/store";
+import { setNotif } from "../redux/notifSlice";
 export const useLogin = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
@@ -28,6 +29,7 @@ export const useLogin = () => {
         dispatch(setLoader(false));
         navigate("/");
         dispatch(setUser(json));
+        dispatch(setNotif("logged in success"));
         console.log(store.getState());
       }
     } catch (error) {

@@ -7,6 +7,7 @@ import { loaderSlice } from "./loaderSlice";
 import { productSlice } from "./productSlice";
 import { allUsersSlice } from "./UsersSlice";
 import { userProductSlice } from "./userProductSlice";
+import { notifSlice } from "./notifSlice";
 
 const persistConfig = {
   key: "root",
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   products: productSlice.reducer,
   userProducts: userProductSlice.reducer,
   users: allUsersSlice.reducer,
+  notif: notifSlice.reducer,
 });
 const persistedReducer = persistReducer(persistConfig, reducer);
 const store = configureStore({

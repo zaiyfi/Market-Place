@@ -11,6 +11,7 @@ import store from "../redux/store";
 import SellerDetails from "../components/SellerDetails";
 import { setViewedProducts } from "../redux/authSlice";
 import ProductInfo from "../components/Others/ProductInfo";
+import ProductReviews from "../components/Others/ProductReviews";
 
 const ProductDetails = () => {
   // Redux states
@@ -107,6 +108,10 @@ const ProductDetails = () => {
                     ) : (
                       "You are not logged in!"
                     )}
+                    <ProductReviews
+                      reviews={product.reviews}
+                      productId={product._id}
+                    />
                   </div>
                 </div>
               </div>

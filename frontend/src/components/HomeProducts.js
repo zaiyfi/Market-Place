@@ -26,7 +26,7 @@ const HomeProducts = () => {
   useEffect(() => {
     dispatch(setLoader(false));
 
-    if (!products.length > 0) {
+    if (!products?.length > 0) {
       const fetchProducts = async () => {
         dispatch(setLoader(true));
         console.log("Loader set to true");
@@ -58,7 +58,7 @@ const HomeProducts = () => {
   };
 
   // Adding Filters
-  const filteredProducts = products.filter(
+  const filteredProducts = products?.filter(
     (product) =>
       (filters === "All" || product.category === filters) &&
       product.status === "Approved" &&
@@ -83,8 +83,8 @@ const HomeProducts = () => {
           <BsFillGrid3X3GapFill className=" border-2 border-gray-500 text-xl" />
         </div>
         <p className="f font-normal">
-          <span className="f font-basic">{filteredProducts.length}</span>{" "}
-          {filteredProducts.length > 1 ? "Products" : "Product"} Available
+          <span className="f font-basic">{filteredProducts?.length}</span>{" "}
+          {filteredProducts?.length > 1 ? "Products" : "Product"} Available
         </p>
         <select className=" border-2 border-gray-500 outline-none p-1 cursor-pointer">
           <option value="">Products (Newest to Oldest)</option>
@@ -162,7 +162,7 @@ const HomeProducts = () => {
         {/*  Mapping     Products */}
         <div className="products md:w-10/12">
           <div className="h-auto relative">
-            {filteredProducts.length === 0 && (
+            {filteredProducts?.length === 0 && (
               <div className="flex justify-center">
                 <h1 className="text-2xl">No Products Available!</h1>
               </div>
@@ -170,11 +170,11 @@ const HomeProducts = () => {
             {products && (
               <div className=" grid grid-cols-4 gap-5">
                 {/* Mapping start */}
-                {filteredProducts.map((product) => (
+                {filteredProducts?.map((product) => (
                   <HomeProductsMap
                     product={product}
-                    user={auth.user}
-                    token={auth.token}
+                    user={auth?.user}
+                    token={auth?.token}
                   />
                 ))}
                 {/* Mapping End */}

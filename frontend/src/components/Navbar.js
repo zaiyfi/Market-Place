@@ -10,6 +10,9 @@ import { SiGnuprivacyguard } from "react-icons/si";
 import { FaRegUserCircle } from "react-icons/fa";
 
 import { useState } from "react";
+import { setProducts } from "../redux/productSlice";
+import store from "../redux/store";
+import { setNotif } from "../redux/notifSlice";
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
@@ -25,6 +28,9 @@ const Navbar = () => {
     localStorage.removeItem("auth");
     navigate("/login");
     dispatch(setUser(null));
+    dispatch(setProducts(null));
+    dispatch(setNotif("logged out success"));
+    console.log(store.getState());
     setDropdown(!dropdown);
   };
 

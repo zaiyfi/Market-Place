@@ -121,9 +121,12 @@ const ProductsForm = ({
   return (
     <div>
       {error && (
-        <div className="error-backend flex border-2 border-red-500 bg-white p-2 rounded">
-          <BiErrorCircle className=" text-red-500 mx-1 text-lg mt-0.5" />
-          <p className="text-black">{error}</p>
+        <div
+          class="error-backend  bg-red-100 border-l-4 border-red-500 text-red-700 p-4 "
+          role="alert"
+        >
+          <p class="font-bold">Be Warned</p>
+          <p>{error}</p>
         </div>
       )}
       {/* antd Modal (Form) */}

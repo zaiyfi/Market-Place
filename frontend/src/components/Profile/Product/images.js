@@ -5,6 +5,7 @@ import { setLoader } from "../../../redux/loaderSlice";
 import store from "../../../redux/store";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
+import { setProductImage } from "../../../redux/productSlice";
 
 const Images = ({ productId }) => {
   const { auth } = useSelector((state) => state.auth);
@@ -33,10 +34,11 @@ const Images = ({ productId }) => {
       console.log(json.error, "Response is not ok");
       dispatch(setLoader(false));
     }
-    console.log(store.getState());
-    dispatch(setLoader(false));
-    console.log(json);
-    window.location.reload();
+    if (response.ok) {
+      dispatch(setLoader(false));
+      dispatch(setProductImage(json));
+      console.log(store.getState());
+    }
   };
   // Image Delete
   const ImageDelete = async (productID, imageIndex) => {
@@ -88,7 +90,7 @@ const Images = ({ productId }) => {
       </Upload>
       <div className="flex gap-5 mt-4">
         {products &&
-          products.map((product) => (
+          products?.map((product) => (
             <div key={product._id} className="flex gap-2 mb-4 ">
               {product._id === productId &&
                 product.images.map((image, index) => (

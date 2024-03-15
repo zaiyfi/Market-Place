@@ -12,6 +12,7 @@ const ProfileDetails = ({ user, token, products }) => {
   const { userProducts } = useSelector((state) => state.userProducts);
   const [productLength, setProductLenght] = useState("");
 
+  const isLoggedIn = auth.user === user._id;
   // Fetching The userProducts
   useEffect(() => {
     if (user._id === auth.user._id && !userProducts.length > 0) {
@@ -49,7 +50,7 @@ const ProfileDetails = ({ user, token, products }) => {
             alt=""
             className="w-[200px] h-[200px]  rounded-full  mb-2 "
           />
-          <UserImgUpload auth={auth} />
+          {isLoggedIn && <UserImgUpload auth={auth} />}
         </div>
 
         <h2 className="w-[100%] text-lg font-medium border-b-2 border-black text-center">
