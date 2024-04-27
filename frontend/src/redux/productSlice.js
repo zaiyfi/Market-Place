@@ -18,11 +18,18 @@ export const productSlice = createSlice({
       state.products = [action.payload, ...state.products];
     },
     setProductImage: (state, action) => {
-      const productImages = state.products.images || [];
-      state.products = {
-        ...state.products,
-        images: [productImages, action.payload],
-      };
+      const { img_url, productId } = action.payload;
+
+      const productIndex = state.products.findIndex((p) => p._id === productId);
+
+      if (productIndex !== -1) {
+        // Product found, update its images
+        state.products[productIndex].images.push(img_url);
+      } else {
+        // Product not found, log an error or add a new product
+        console.error("Product not found");
+        // Add new product logic goes here if needed
+      }
     },
     setProductReview: (state, action) => {
       const updatedProduct = action.payload;

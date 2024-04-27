@@ -12,6 +12,7 @@ const Images = ({ productId }) => {
   const { products } = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
+
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
@@ -34,9 +35,10 @@ const Images = ({ productId }) => {
       console.log(json.error, "Response is not ok");
       dispatch(setLoader(false));
     }
+    const img_url = json;
     if (response.ok) {
       dispatch(setLoader(false));
-      dispatch(setProductImage(json));
+      dispatch(setProductImage({ img_url, productId }));
       console.log(store.getState());
     }
   };
@@ -93,7 +95,7 @@ const Images = ({ productId }) => {
           products?.map((product) => (
             <div key={product._id} className="flex gap-2 mb-4 ">
               {product._id === productId &&
-                product.images.map((image, index) => (
+                product.images?.map((image, index) => (
                   <div className="relative" key={index}>
                     <img
                       className="h-20 w-20 object-cover p-2 border border-solid border-neutral-800 rounded"
