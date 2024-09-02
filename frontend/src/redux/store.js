@@ -15,7 +15,7 @@ const persistConfig = {
   storage,
 };
 
-const reducer = combineReducers({
+const appReducer = combineReducers({
   auth: authSlice.reducer,
   loader: loaderSlice.reducer,
   products: productSlice.reducer,
@@ -23,7 +23,16 @@ const reducer = combineReducers({
   users: allUsersSlice.reducer,
   notif: notifSlice.reducer,
 });
-const persistedReducer = persistReducer(persistConfig, reducer);
+
+const rootReducer = (state, action) => {
+  if (action.type === 'auth/logout') {
+    // Reset the state to initial state (null or undefined)
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 const store = configureStore({
   reducer: persistedReducer,
 });

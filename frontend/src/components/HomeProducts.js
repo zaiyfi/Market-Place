@@ -40,6 +40,7 @@ const HomeProducts = () => {
           dispatch(setLoader(false));
         }
         if (response.ok) {
+          console.log(products)
           dispatch(setProducts(json));
           dispatch(setLoader(false));
           console.log("Loader set to false");

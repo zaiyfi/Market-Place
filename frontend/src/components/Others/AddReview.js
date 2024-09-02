@@ -33,6 +33,7 @@ const AddReview = ({ IoStar, productId, setAddReview }) => {
   return (
     <div className="my-2">
       <div className="rating flex">
+        {/* mapping 1 start 5 times for 5 star rating */}
         {[...Array(5)].map((star, index) => {
           const currentRating = index + 1;
           return (

@@ -44,6 +44,17 @@ export const productSlice = createSlice({
         console.error("Product not found");
       }
     },
+
+    updateProduct: (state, action) => {
+      const updatedProduct = action.payload;
+      const productIndex = state.products.findIndex(
+        (product) => product._id === updatedProduct._id
+      );
+
+      if (productIndex >= 0) {
+        state.products[productIndex] = updatedProduct; // Update the name of the product with the given _id
+      }
+    },
   },
 });
 export const {
@@ -52,4 +63,6 @@ export const {
   createProduct,
   setProductImage,
   setProductReview,
+  setProductStatus,
+  updateProduct,
 } = productSlice.actions;

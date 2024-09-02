@@ -94,7 +94,12 @@ const getUserProducts = async (req, res) => {
 const updateProduct = async (req, res) => {
   const { _id } = req.params;
   try {
-    const product = await Product.findOneAndUpdate({ _id }, { ...req.body });
+    const product = await Product.findOneAndUpdate(
+      { _id },
+      { ...req.body },
+      { new: true }
+    );
+
     res.status(200).json(product);
   } catch (error) {
     res.status(404).json({ error: "No Such Product Exists!" });
@@ -121,8 +126,6 @@ const deleteProductImage = async (req, res) => {
     if (!product) {
       return res.status(404).json({ error: "Product not found!" });
     }
-
-    console.log(product.name, product.images);
 
     if (!product.images || !Array.isArray(product.images)) {
       return res.status(400).json({ error: "Product has no images" });

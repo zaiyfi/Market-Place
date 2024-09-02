@@ -5,6 +5,7 @@ import store from "../../../redux/store";
 import UserImgUpload from "./UserImgUpload";
 import FavProducts from "../Product/FavProducts";
 import UserProducts from "./UserProducts";
+import { setLoader } from "../../../redux/loaderSlice";
 
 const ProfileDetails = ({ user, token, products }) => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const ProfileDetails = ({ user, token, products }) => {
   const isLoggedIn = auth.user === user._id;
   // Fetching The userProducts
   useEffect(() => {
-    if (user._id === auth.user._id && !userProducts.length > 0) {
+    if (user._id === auth.user._id && !userProducts?.length > 0) {
       const fetchProducts = async () => {
         try {
           const response = await fetch("/api/products/user-products", {

@@ -20,33 +20,12 @@ const ProductDetails = () => {
   const dispatch = useDispatch();
   const { productId } = useParams();
 
-  // Get All Products
-  useEffect(() => {
-    const fetchProduct = async () => {
-      dispatch(setLoader(true));
-
-      const response = await fetch(`/api/products`, {
-        method: "GET",
-      });
-      if (!response.ok) {
-        console.log("response is not ok");
-        dispatch(setLoader(false));
-      }
-      const json = await response.json();
-      dispatch(setProducts(json));
-      console.log(store.getState());
-      dispatch(setLoader(false));
-    };
-    if (productId) {
-      fetchProduct();
-    }
-  }, [productId, dispatch]);
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   return (
     <div className="product-details">
       <div className=" m-2">
-        {products &&
+        {products.length>0 &&
           products
             .filter((product) => product._id === productId)
             .map((product) => (
@@ -109,6 +88,7 @@ const ProductDetails = () => {
                       "You are not logged in!"
                     )}
                     <ProductReviews
+                    auth={auth} 
                       reviews={product.reviews}
                       productId={product._id}
                     />

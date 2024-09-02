@@ -22,12 +22,11 @@ import Page404 from "./pages/Page404";
 import ProductDetails from "./pages/ProductDetails";
 import ProtectedLogin from "./components/Others/ProtectedLogin";
 import UserData from "./pages/UserData";
+import { setLoader } from "./redux/loaderSlice";
 
 function App() {
   // Getting the state of loader
   const { loading } = useSelector((state) => state.loader);
-  const { auth } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     try {
@@ -35,7 +34,7 @@ function App() {
     } catch (error) {
       console.log("User is not Logged in!");
     }
-  }, [dispatch]);
+  }, []);
 
   // Routing
   return (
@@ -45,14 +44,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path={"/"} element={<Home />} />
-          <Route
-            path={"/product/:productId"}
-            element={
-              <ProtectedLogin>
-                <ProductDetails />
-              </ProtectedLogin>
-            }
-          />
+          <Route path={"/product/:productId"} element={<ProductDetails />} />
 
           <Route
             path="/dashboard"

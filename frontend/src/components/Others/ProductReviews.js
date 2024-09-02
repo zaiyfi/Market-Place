@@ -3,7 +3,7 @@ import Button from "./Button";
 import { IoStar, IoStarOutline } from "react-icons/io5";
 import AddReview from "./AddReview";
 
-const ProductReviews = ({ reviews, productId }) => {
+const ProductReviews = ({ reviews, productId, auth }) => {
   const [addReview, setAddReview] = useState(false);
   return (
     <div>
@@ -51,7 +51,8 @@ const ProductReviews = ({ reviews, productId }) => {
           setAddReview={setAddReview}
         />
       )}
-      <Button content="Add a review" setAddReview={setAddReview} />
+            {/* Custom Made Button Component */}
+      <Button content={auth ? `Add a review`: "Please Login First!"} bgColor={auth?`bg-primary`:` bg-secondary`} disable={auth? false:true} setAddReview={setAddReview} />
     </div>
   );
 };

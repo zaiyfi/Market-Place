@@ -11,9 +11,11 @@ import {
   setViewedProducts,
 } from "../redux/authSlice";
 import store from "../redux/store";
+import { useNavigate } from "react-router-dom";
 
 function HomeProductsMap({ product, user, token }) {
   const dispatch = useDispatch();
+const navigate = useNavigate();
 
   // Fav Products
   const addFavProduct = async () => {
@@ -64,7 +66,8 @@ function HomeProductsMap({ product, user, token }) {
 
   // product View
   const ProductDetails = () => {
-    window.open(`/product/${product._id}`, "_blank");
+    navigate(`/product/${product._id}`);
+   if(user){
     const addView = async () => {
       const response = await fetch(
         `/api/auth/viewProducts/${product._id}/${user._id}`,
@@ -87,6 +90,7 @@ function HomeProductsMap({ product, user, token }) {
       }
     };
     addView();
+   }
   };
   return (
     <div

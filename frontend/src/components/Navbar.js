@@ -13,6 +13,7 @@ import { useState } from "react";
 import { setProducts } from "../redux/productSlice";
 import store from "../redux/store";
 import { setNotif } from "../redux/notifSlice";
+import { setUserProducts } from "../redux/userProductSlice";
 
 const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
@@ -27,22 +28,18 @@ const Navbar = () => {
   const handleLogout = async () => {
     localStorage.removeItem("auth");
     navigate("/login");
-    dispatch(setUser(null));
-    dispatch(setProducts(null));
-    dispatch(setNotif("logged out success"));
+    dispatch({ type: "auth/logout" });
     console.log(store.getState());
     setDropdown(!dropdown);
   };
 
   // Button Funtionality
   const handleClick = () => {
-    // Determine the target URL based on the user's role
+    // Determining the target URL based on the user's role
     const targetUrl = auth.user.role === "User" ? "/dashboard" : "/admin";
 
-    // Perform programmatic navigation using history.push
     navigate(targetUrl);
 
-    // Close the dropdown after navigation
     setDropdown(false);
   };
 
@@ -77,7 +74,7 @@ const Navbar = () => {
             ) : (
               <FaRegUserCircle className="text-xl  me-1" />
             )}
-            {auth ? <p>Dashboard</p> : <p>Login</p>}
+            {auth ? <p>{auth.user.name}</p> : <p>Login</p>}
             <IoIosArrowDropdown
               className={`icon-rotate text-2xl ms-1 ${
                 dropdown === true && "rotate-180 "

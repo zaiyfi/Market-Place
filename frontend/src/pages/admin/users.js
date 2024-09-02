@@ -67,7 +67,7 @@ const Users = () => {
 
   //   JSX start
   return (
-    <div className="antd mt-4">
+    <div className="w-[75%]  me-[5%]">
       {updated && (
         <div className="error-backend flex border-2 border-green-500 bg-white p-2 rounded">
           <GrStatusGood className=" text-green-500 mx-1 text-lg mt-0.5" />

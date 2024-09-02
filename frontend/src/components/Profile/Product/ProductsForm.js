@@ -9,8 +9,12 @@ import { setLoader } from "../../../redux/loaderSlice";
 import { BiErrorCircle } from "react-icons/bi";
 import store from "../../../redux/store";
 import Images from "./images";
-import { createProduct } from "../../../redux/productSlice";
-import { createUserProduct } from "../../../redux/userProductSlice";
+import { createProduct, updateProduct } from "../../../redux/productSlice";
+import {
+  createUserProduct,
+  updateUserProduct,
+} from "../../../redux/userProductSlice";
+import { json } from "react-router-dom";
 
 const ProductsForm = ({
   showProductForm,
@@ -102,7 +106,11 @@ const ProductsForm = ({
       if (!response.ok) {
         throw new Error("Failed to add product");
       }
-
+      const json = await response.json();
+      if (response.ok) {
+        dispatch(updateUserProduct({ updatedProduct: json }));
+        dispatch(updateProduct({ updatedProduct: json }));
+      }
       dispatch(setLoader(false));
       setEditForm(false);
       setShowProductForm(false);

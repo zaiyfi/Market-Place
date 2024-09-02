@@ -14,6 +14,8 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 // Other modules
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { Button } from "antd";
+import { deleteUserProduct } from "../../../redux/userProductSlice";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   // use States
@@ -24,7 +26,10 @@ const Products = () => {
   // Redux
   const { auth } = useSelector((state) => state.auth);
   const { userProducts } = useSelector((state) => state.userProducts);
+
+  // Hooks
   const dispatch = useDispatch();
+  const navigate = useNavigate()
 
   // Slicing the description of product
   const SliceDescription = (description, wordCount) => {
@@ -50,9 +55,12 @@ const Products = () => {
       dispatch(setLoader(false));
     }
 
-    dispatch(deleteProduct(json));
-    dispatch(setLoader(false));
-    console.log(store.getState());
+if(response.ok){
+  dispatch(deleteProduct(json));
+  dispatch(deleteUserProduct(json))
+  dispatch(setLoader(false));
+  console.log(store.getState());
+}
   };
 
   // JSX
@@ -89,7 +97,10 @@ const Products = () => {
                   userProducts.map((product) => (
                     <tbody key={product._id}>
                       <tr className="border-b dark:border-neutral-500">
-                        <td className="whitespace-nowrap  px-6 py-4">
+                        <td
+                          className="whitespace-nowrap  px-6 py-4 underline cursor-pointer"
+                          onClick={() => navigate(`/product/${product._id}`)}
+                        >
                           {product.name}
                         </td>
                         <td className="whitespace-nowrap  px-6 py-4">
@@ -103,6 +114,7 @@ const Products = () => {
                             addSuffix: true,
                           })}
                         </td>
+                        {/* Delete Product */}
                         <td className="whitespace-nowrap flex gap-1 px-6 py-4 justify-center">
                           <AiOutlineDelete
                             className=" cursor-pointer text-lg "
@@ -110,6 +122,7 @@ const Products = () => {
                               handleDelete(product._id);
                             }}
                           />
+                          {/* Edit Product */}
                           <AiOutlineEdit
                             className=" cursor-pointer text-lg"
                             onClick={() => {

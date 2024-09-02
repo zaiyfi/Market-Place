@@ -45,6 +45,7 @@ function SellerDetails({ seller }) {
           </div>
         </div>
       )}
+      {/* Custom Made Button Component */}
       <Button link={`/seller/profile/${user._id}`} content="Seller Profile" />
     </div>
   );
